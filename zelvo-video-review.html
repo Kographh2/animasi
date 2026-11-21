@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZELVO — Video Review</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+:root{--bg:#05070B;--bl:#2D6BFF;--bl2:#4D8DFF;--wh:#F5F7FA;--mu:#9AA4B5;--em:#10D9A0;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--wh);font:400 15px Inter,system-ui,sans-serif}
+button{font:600 14px Inter,sans-serif;color:var(--wh);background:#0E1424;border:1px solid #263154;border-radius:10px;min-height:44px;padding:0 16px;cursor:pointer}
+button:hover{border-color:var(--bl2)}button:focus-visible{outline:2px solid var(--bl2);outline-offset:2px}button[aria-pressed=false]{opacity:.55}
+.app{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;padding:20px;max-width:1200px;margin:0 auto}
+.player{display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}.player:fullscreen{background:#000;justify-content:center;padding:8px}
+.vp{position:relative;overflow:hidden;border-radius:14px;background:#000;border:1px solid #1B2440}
+.ps{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:20;width:120px;height:120px;border-radius:50%;background:var(--bl);border:0;font:700 22px 'Space Grotesk',sans-serif;box-shadow:0 0 0 14px rgba(45,107,255,.25)}
+.ctl{width:100%;display:flex;flex-direction:column;gap:10px}.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pb{background:var(--bl);border-color:var(--bl);min-width:110px}
+.tl{display:flex;gap:3px;height:22px;align-items:center;cursor:pointer;touch-action:none}.sg{flex:1;height:8px;background:#1A2238;border-radius:3px;overflow:hidden}.sg i{display:block;height:100%;width:0;background:var(--bl2)}
+.inf{color:var(--mu);font:500 14px Inter,sans-serif}.inf b{color:var(--wh)}
+aside{display:flex;flex-direction:column;gap:10px}aside h1{margin:0;font:700 24px 'Space Grotesk',sans-serif}aside p{margin:0;color:var(--mu);line-height:1.5}
+.li{display:flex;gap:12px;align-items:center;width:100%;text-align:left;min-height:40px;padding:0 12px;font-weight:500}.li b{color:var(--bl2);width:22px}.li span{flex:1}.li em{color:var(--mu);font-style:normal}.li.on{border-color:var(--bl);background:#0F1D44}
+@media(max-width:900px){.app{grid-template-columns:1fr}}
+.stg{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:0 0;background:var(--bg);overflow:hidden;font-family:'Space Grotesk',Inter,sans-serif;color:var(--wh)}
+.bg{position:absolute;left:0;right:0;top:-200px;bottom:-200px;background:linear-gradient(#111827 2px,transparent 2px) 0 0/100% 120px,linear-gradient(90deg,#111827 2px,transparent 2px) 0 0/120px 100%;opacity:.8}
+.gl{position:absolute;left:100px;top:300px;width:900px;height:900px;border-radius:50%;background:radial-gradient(closest-side,rgba(45,107,255,.3),transparent)}
+.cm{position:absolute;inset:0;transform-origin:50% 55%;transform:scale(calc(1 + var(--c,0)*.07))}
+.cm>div,.cm>i{position:absolute}
+.r{opacity:var(--p,0);transform:translateY(calc((1 - var(--p,0))*50px))}
+.bi{opacity:var(--p,0);filter:blur(calc((1 - var(--p,0))*16px));transform:scale(calc(1.08 - var(--p,0)*.08))}
+.mk{clip-path:inset(0 calc((1 - var(--p,0))*100%) 0 0)}
+.sc2{opacity:var(--p,0);transform:scale(calc(.6 + var(--p,0)*.4))}
+.sl{opacity:var(--p,0);transform:translateX(calc((1 - var(--p,0))*-160px))}.sr{opacity:var(--p,0);transform:translateX(calc((1 - var(--p,0))*160px))}
+.o{opacity:var(--p,0)}.fx{opacity:var(--p,0);transform:perspective(1400px) rotateX(calc((1 - var(--p,0))*40deg)) translateY(calc(var(--t,0)*-3px))}
+.tx{left:80px;width:920px;text-align:center;font:700 120px/1 'Space Grotesk';letter-spacing:-.02em;white-space:nowrap}
+.pt{background:var(--bl2);border-radius:50%;opacity:.5;transform:translateY(calc(var(--t,0)*var(--v,-10)*1px))}
+.bm{left:440px;top:0;width:200px;height:1920px;background:linear-gradient(90deg,transparent,rgba(45,107,255,.55),transparent);filter:blur(30px)}
+.rg2{left:290px;top:650px;width:500px;height:500px;border:2px solid var(--bl);border-radius:50%;opacity:calc(var(--p,0)*(1 - var(--p,0))*4);transform:scale(calc(.4 + var(--p,0)*(1.2 + var(--s,0)*.6)))}
+.wmk{background:linear-gradient(100deg,#fff 40%,#6FA0FF 50%,#fff 60%) 0 0/300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-position:calc(var(--t,0)*12%) 0;letter-spacing:.06em}
+.wn{left:90px;top:520px;width:900px;height:760px;border-radius:28px;background:#0A0F1B;border:2px solid #263154;padding:36px;overflow:hidden}
+.dots i{display:inline-block;width:16px;height:16px;border-radius:50%;background:#2A3350;margin-right:10px}
+.wt{font:700 66px/1.1 'Space Grotesk';margin-top:36px}.sk{height:22px;border-radius:11px;background:#18203A;margin-top:26px}
+.pl,.pl2,.pl3,.fc{display:inline-block;padding:14px 30px;border-radius:99px;font:600 32px Inter;border:2px solid var(--bl);background:rgba(45,107,255,.18);white-space:nowrap}
+.pl2,.pl3{background:transparent;border-color:#5A6478}.pl3{border-color:var(--em);color:var(--em)}
+.fc{transform:translateY(calc(var(--t,0)*var(--v,-6)*1px))}.fc.e{border-color:var(--em);color:var(--em);background:rgba(16,217,160,.12)}
+.cn{left:80px;width:920px;text-align:center;font:700 300px/1 'Space Grotesk';letter-spacing:-.04em}
+.mqw{left:0;width:1080px;overflow:hidden}.mq{display:flex;gap:20px;margin-left:var(--m,0);transform:translateX(calc(var(--t,0)*var(--v,0)*-1px))}
+.mc2{flex:none;padding:14px 34px;border:2px solid var(--bl);border-radius:99px;font:600 40px Inter;background:rgba(45,107,255,.12)}
+.pr{left:0;top:700px;width:1080px;height:600px;perspective:1600px}.rg3{position:absolute;left:540px;top:250px;transform-style:preserve-3d;transform:rotateY(calc(var(--t,0)*20deg))}
+.cd{position:absolute;left:-150px;top:-90px;width:300px;height:180px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;border:2px solid var(--bl);border-radius:22px;background:rgba(10,18,40,.92);font:600 34px 'Space Grotesk';transform:rotateY(calc(var(--i)*40deg)) translateZ(430px)}
+.lb{left:80px;width:920px;text-align:center;font:500 34px Inter;letter-spacing:.18em;color:var(--mu);text-transform:uppercase}
+.sb{left:90px;top:470px;width:900px;height:100px;border-radius:50px;border:2px solid #3A4668;background:#0A0F1B;padding:0 44px;display:flex;align-items:center;font:500 36px Inter;color:var(--mu)}
+.sgm{left:90px;top:800px;width:900px;height:92px;border-radius:46px;border:2px solid #263154;background:#0A0F1B}
+.hs{top:804px;width:296px;height:84px;border-radius:42px;background:var(--bl)}
+.sgl{top:804px;width:300px;height:84px;display:flex;align-items:center;justify-content:center;text-align:center;font:600 24px Inter;line-height:1.1;padding:0 10px}
+.rdg{left:-100px;top:200px;width:1280px;height:1280px;border-radius:50%;background:radial-gradient(closest-side,rgba(220,38,38,.38),transparent)}
+.ck{background:conic-gradient(#2A2F3A 25%,#171B24 0 50%,#2A2F3A 0 75%,#171B24 0) 0 0/40px 40px}
+.ar{left:240px;top:800px;width:600px;height:600px;border-radius:30px;border:2px solid #C9CDD6;overflow:hidden;opacity:var(--p,0);transform:perspective(1200px) rotateY(calc(-20deg + var(--t,0)*3deg)) scale(calc(.8 + var(--p,0)*.2))}
+.ar b{position:absolute;left:0;right:0;top:250px;text-align:center;font:700 40px 'Space Grotesk';text-shadow:0 0 20px #000}.ar small{position:absolute;left:0;right:0;top:310px;text-align:center;font:500 28px Inter;color:#C9CDD6}
+.nd{left:100px;width:120px;height:120px;border-radius:50%;border:3px solid var(--bl);background:#0A1230;display:flex;align-items:center;justify-content:center;font:700 52px 'Space Grotesk'}
+.ln{left:157px;width:6px;height:140px;background:var(--bl);transform-origin:top;transform:scaleY(var(--p,0))}
+.fl{left:260px;font:600 60px 'Space Grotesk'}
+.fi{left:280px;top:480px;width:520px;height:620px;border-radius:36px 100px 36px 36px;border:3px solid #C9CDD6;overflow:hidden;position:absolute}
+.fi b{position:absolute;left:0;right:0;top:230px;text-align:center;font:700 140px 'Space Grotesk';text-shadow:0 0 30px #000}
+.st{font:700 140px/1 'Space Grotesk';color:var(--bl2)}
+.bt{left:240px;width:600px;height:26px;border-radius:13px;background:#18203A;overflow:hidden}.bf{height:100%;background:var(--bl2);transform-origin:left;transform:scaleX(var(--p,0))}
+.av{left:420px;top:470px;width:240px;height:240px;border-radius:50%;background:#0A1230;border:6px solid var(--bl);display:flex;align-items:center;justify-content:center;font:700 90px 'Space Grotesk';box-shadow:0 0 60px rgba(45,107,255,.5)}
+.gh{left:140px;top:1150px;width:800px;height:230px;border:3px dashed #3A4668;border-radius:28px;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;font:500 38px Inter;color:var(--mu)}
+.fm{left:140px;width:800px}.fm label{display:block;font:600 30px Inter;color:var(--mu);margin-bottom:10px}.fm div{height:86px;border:2px solid #3A4668;border-radius:18px;background:#0A0F1B;overflow:hidden}.fm div i{display:block;height:100%;background:rgba(45,107,255,.35);transform-origin:left;transform:scaleX(var(--p,0))}
+.btn{left:140px;top:1400px;width:800px;height:100px;border-radius:50px;background:var(--bl);display:flex;align-items:center;justify-content:center;font:700 40px 'Space Grotesk'}
+.fly{top:1330px;left:calc(80px + var(--p,0)*620px)}.mk2{left:700px;top:1290px;width:300px;height:200px;border:3px solid var(--em);border-radius:28px;display:flex;align-items:center;justify-content:center;text-align:center;font:700 40px 'Space Grotesk';color:var(--em)}
+.fd{left:90px;width:900px;height:110px;border:2px solid #3A4668;border-radius:20px;background:#0A0F1B;display:flex;align-items:center;justify-content:space-between;padding:0 36px;font:600 38px Inter}
+.fd.go{background:var(--bl);border-color:var(--bl);justify-content:center}.fd u{width:260px;height:20px;border-radius:10px;background:#18203A}
+.scn{left:70px;width:940px;height:6px;border-radius:3px;background:var(--bl2);box-shadow:0 0 30px var(--bl);top:calc(470px + var(--p,0)*840px)}
+.dt{width:60px;height:60px;border-radius:50%;border:3px solid #3A4668;opacity:var(--p,0);background:rgba(16,217,160,.3)}
+.it{left:100px;font:600 44px Inter;display:flex;align-items:center;gap:20px}.it::before{content:"";width:18px;height:18px;border-radius:50%;background:var(--em)}.it.w::before{background:transparent;border:3px solid #9AA4B5}
+.ntx{left:80px;width:920px;top:1500px;text-align:center;font:500 26px Inter;color:var(--mu);letter-spacing:.08em}
+.sub{position:absolute;left:60px;width:960px;bottom:110px;min-height:110px;display:flex;align-items:flex-end;justify-content:center;text-align:center;font:700 38px/1.3 Inter;text-shadow:0 2px 14px #000,0 0 4px #000;z-index:5;opacity:0}.sub b{color:var(--bl2)}
+.wp{position:absolute;inset:0;z-index:9;background:linear-gradient(180deg,#2D6BFF,#1747C4);border-top:6px solid #fff;border-bottom:6px solid #fff;transform:translateY(-120%)}.wp.bk{background:#000;border:0}
+.fo{position:absolute;inset:0;background:#000;z-index:8;opacity:var(--p,0)}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="player" id="P">
+<div class="vp" id="VP"><div class="stg" id="STG"><div class="bg" id="BG"></div><div class="gl" id="GL"></div><div id="SC"></div><div class="sub" id="SUB"><span id="ST"></span></div><div class="wp" id="WP"></div></div><button class="ps" id="PS" aria-label="Putar video">PLAY</button></div>
+<div class="ctl" id="CT">
+<div class="tl" id="TL" aria-label="Timeline"></div>
+<div class="row"><button class="pb" id="PB">Play</button><button id="RS">Restart</button><button id="AU" aria-pressed="true">Musik &amp; efek</button><button id="VO" aria-pressed="true">Voice</button><button id="SB" aria-pressed="true">Subtitle</button><button id="SPD">1×</button><button id="FS">Layar penuh</button></div>
+<div class="row"><span class="inf" id="TD"></span><span class="inf" id="SN"></span></div>
+</div>
+</div>
+<aside>
+<h1>ZELVO — Video Review</h1>
+<p>Video animasi 6:20 yang berjalan di browser. Ini bukan file MP4.</p>
+<p>Isinya motion graphics, bukan rekaman website. Tampilan UI hanya ilustrasi konsep, dan artwork template berupa placeholder. Data diambil dari website ZELVO saat dicek.</p>
+<p>Voice memakai TTS bawaan browser (bukan voice-over profesional). Musik dan efek dibuat sintetis oleh browser. <span id="VN"></span></p>
+<div id="LI" style="display:flex;flex-direction:column;gap:6px"></div>
+</aside>
+</div>
+<script>
+const E=t=>1-Math.pow(1-t,3),C=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),$=s=>document.getElementById(s),p2=n=>String(n).padStart(2,"0"),fmt=x=>Math.floor(x/60)+":"+p2(Math.floor(x%60));
+const a=(t,du,c,x,e="")=>`<div class="${c}" data-a="${t}" data-d="${du}" ${e}>${x}</div>`;
+const X=(txt,t,y,fs,c,col,b,e="")=>a(t,.9,"tx "+c,txt,`style="top:${y}px;font-size:${fs}px;${col?"color:"+col+";":""}" ${b?`data-b="${b}"`:""} ${e}`);
+const pt=(n,sd)=>{let s=sd,h="";const R=()=>(s=(s*9301+49297)%233280)/233280;for(let i=0;i<n;i++)h+=`<i class="pt" style="left:${R()*100}%;top:${R()*130}%;width:${3+R()*6}px;height:${3+R()*6}px;--v:${-(8+R()*30)}"></i>`;return h};
+const NT=t=>a(t,.6,"ntx r","visualisasi konsep UI · bukan screenshot website");
+const L=(t,y,x,e="")=>a(t,.6,"lb r",x,`style="top:${y}px" ${e}`);
+const CN=(t,y,n,dc,su,fs)=>a(t,3,"cn bi","",`style="top:${y}px;${fs?"font-size:"+fs+"px":""}" data-n="${n}" data-dc="${dc}" data-pr="" data-su="${su}"`);
+const MO=["Vario","Aerox","NMAX","PCX","Beat","Scoopy","Vespa","Ninja","CBR","R15","Satria","Vixion","Trail / KLX","Lainnya"],GA=["Striping kata-kata","Vietnam style","Racing","Sunmori","Minimalis","Retro","Anime","Full body","Lainnya"];
+const S=[
+{t:"Hook",d:20,L:["Jujur, ganti striping motor di game itu seru, tapi nyari desainnya sering ribet.","Nah, gue nemu website yang bikin semuanya lebih simpel.","Namanya *ZELVO*, dan kali ini kita bedah dari awal."],
+b:d=>a(.3,2,"bm o","")+pt(30,7)+X("NYARI",1,640,200,"bi","",5.6)+X("STRIPING?",1.7,850,200,"bi","",5.6)+X("TINGGAL",6,700,180,"mk","",10)+X("INSTALL.",6.6,910,180,"mk","#4D8DFF",10)+[0,1,2].map(q=>a(10+q*.3,1.4,"rg2","",`style="--s:${q}"`)).join("")+X("ZELVO",10.6,790,230,"bi wmk","",0,'data-s="imp"')+X("template striping · Drag Bike 201m Sunmori",14,1070,34,"r","#9AA4B5")},
+{t:"Kenalan sama ZELVO",d:25,L:["Jadi, ZELVO ini marketplace *template striping* buat Drag Bike 201m Sunmori.","Headline-nya jelas banget: striping motor game kamu, *tinggal install*.","Ada yang gratis, ada juga yang berbayar, dan semuanya dari kreator komunitas."],
+b:d=>pt(18,3)+a(.4,1.2,"wn fx",`<div class="dots"><i></i><i></i><i></i></div><div class="wt" style="opacity:1">${a(2,.9,"mk","Striping motor game kamu,")}${a(2.6,.9,"mk","tinggal install.",'style="color:#4D8DFF"')}</div>${a(4.5,.6,"sk mk","",'style="width:80%"')}${a(4.8,.6,"sk mk","",'style="width:55%"')}<div style="margin-top:50px">${a(6,.5,"pl r","Jelajahi template",'data-s="click"')} ${a(6.4,.5,"pl2 r","Jadi penyumbang")}</div>`)+a(8,.6,"fc sc2","Gratis",'style="left:40px;top:380px;--v:-6"')+a(9,.6,"fc e sc2","PNG 1024 × 1024",'style="left:600px;top:1360px;--v:5"')+a(10,.6,"fc sc2","Berbayar",'style="left:70px;top:1400px;--v:-4"')+NT(12)},
+{t:"Kategori motor",d:25,L:["Kalau gue lihat, homepage-nya ngelompokin desain berdasarkan motor.","Total ada *14 kategori*, dari Vario, Aerox, NMAX, sampai Trail atau KLX.","Jadi lu bisa langsung nyari yang cocok sama motor lu."],
+b:d=>pt(14,11)+CN(.6,340,14,0,"")+L(1.5,660,"kategori motor")+[[0,5,40],[5,10,-55],[10,14,32]].map(([s,e,v],r)=>{const c=MO.slice(s,e).map(x=>`<div class="mc2">${x}</div>`).join("").repeat(5);return a(2+r*.4,.8,"mqw o",`<div class="mq" style="--v:${v};--m:${v<0?-2400:0}px">${c}</div>`,`style="top:${900+r*140}px"`)}).join("")},
+{t:"Kategori style",d:20,L:["Nggak cuma motor, gayanya juga dipisah, ada *9 pilihan*.","Mulai dari Racing, Sunmori, Vietnam style, Retro, Anime, sampai Full body.","Tinggal pilih vibe yang lu suka."],
+b:d=>CN(.6,300,9,0,"")+L(1.5,620,"gaya striping")+a(.8,1,"pr o",`<div class="rg3">${GA.map((s,i)=>`<div class="cd" style="--i:${i}">${s}</div>`).join("")}</div>`)},
+{t:"Explore",d:25,L:["Di halaman Jelajah ada filter motor, filter gaya, dan gratis atau berbayar.","Urutannya bisa diatur: terbaru, paling banyak di-install, atau rating tertinggi.","Untuk sekarang, hasilnya cuma *1 template ditemukan*."],
+b:d=>NT(1)+a(.4,.8,"sb mk","Cari template…")+["Semua motor","Semua gaya","Gratis dan berbayar"].map((x,i)=>a(2+i*.7,.5,"fc r",x,`style="left:${90+i*20+i*270}px;top:630px;font-size:28px;padding:12px 24px" data-s="click"`)).join("")+a(6,.5,"sgm o","")+[0,1,2].map(i=>a(8+i*2.5,.5,"hs o","",`style="left:${92+i*300}px" data-b="${10.2+i*2.5}"`)).join("")+["Terbaru","Paling banyak di-install","Rating tertinggi"].map((x,i)=>a(6.3,.5,"sgl o",x,`style="left:${92+i*300}px"`)).join("")+CN(13,1000,1,0,"",260)+L(14,1300,"template ditemukan")},
+{t:"Detail template",d:30,L:["Template satu-satunya saat gue cek adalah *Dragon Vortex*, Crimson Edition.","Gratis, kategorinya Vario, dan style-nya Full body.","Deskripsinya bilang warnanya hitam, merah, dan silver, dengan motif naga.","Artwork di sini cuma placeholder, karena gue nggak bisa narik gambar aslinya."],
+b:d=>a(0,1.5,"rdg o","")+X("Dragon Vortex",1,470,130,"mk wmk","",0,'data-s="imp"')+X("CRIMSON EDITION",2.2,640,64,"bi","#C9CDD6")+a(3.5,1.2,"ar",`<div class="ck" style="position:absolute;inset:0"></div><b>PLACEHOLDER ARTWORK</b><small>bukan desain asli</small>`)+[["FREE","e"],["VARIO",""],["FULL BODY",""]].map(([x,c],i)=>a(8+i*.6,.5,"fc sc2 "+c,x,`style="left:${100+i*270}px;top:1470px;--v:0;font-size:28px"`)).join("")+a(10.5,.5,"fc sc2","1 install · 5.0",'style="left:300px;top:1570px;--v:0;font-size:28px"')},
+{t:"Sistem install",d:25,L:["Yang menarik, install template gratis itu *nggak perlu daftar*.","Lu tinggal klik install, isi nama, terus download.","Install lu tetap tercatat, jadi jumlahnya kehitung di halaman produk.","Gue belum nyoba prosesnya langsung, jadi ini sesuai yang tertulis di website."],
+b:d=>["Pilih template","Klik install","Masukkan nama","Download"].map((x,i)=>a(1+i*2.4,.6,"nd sc2",i+1,`style="top:${470+i*260}px" data-s="${i==3?"ding":"click"}"`)+a(1.3+i*2.4,.7,"fl sl",x,`style="top:${505+i*260}px"`)+(i<3?a(2+i*2.4,.8,"ln","",`style="top:${590+i*260}px"`):"")).join("")+a(12,.6,"pl3 r","Tanpa daftar atau login",'style="left:100px;top:1560px;position:absolute"')},
+{t:"Format file",d:20,L:["Hasil downloadnya berupa *PNG transparan* ukuran 1024 kali 1024 pixel.","Itu sesuai ketentuan game, dan file aslinya cuma lewat tombol install.","Jadi preview-nya sengaja dikasih watermark."],
+b:d=>pt(14,5)+a(.5,1.2,"mk",`<div class="fi"><div class="ck" style="position:absolute;inset:0"></div><b>PNG</b></div>`)+CN(3,1160,1024,0," × 1024",96)+X("TRANSPARENT",5,1330,48,"r","#4D8DFF")+NT(8)},
+{t:"Rating",d:20,L:["Soal rating, template ini nilainya *5.0*, tapi baru dari satu rating.","Jujur, itu belum bisa dijadikan patokan.","Dan buat kasih rating, lu harus install dulu, jadi bukan angka asal-asalan."],
+b:d=>[0,1,2,3,4].map(i=>a(1+i*.45,.4,"st sc2","★",`style="left:${100+i*170}px;top:470px"`)).join("")+CN(3.5,680,5,1,"",230)+[5,4,3,2,1].map((n,i)=>a(6+i*.3,.5,"it r",n+'<span style="width:600px;margin-left:60px">'+""+"</span>",`style="top:${1010+i*70}px;font-size:34px;color:#9AA4B5"`)+a(6.4+i*.3,i?.1:2,"bt",`<div class="bf" style="${i?"":""}"></div>`,`style="top:${1020+i*70}px;left:280px;width:600px;${i?"":""}"`)+a(7+i*.3,.4,"it r",i?"0":"1",`style="top:${1010+i*70}px;left:920px;font-size:34px"`)).join("")+a(11,.5,"pl3 r","1 rating · 1 install",'style="left:300px;top:1400px;position:absolute"')+a(13,.6,"pl2 r","baru 1 rating — belum representatif",'style="left:130px;top:1500px;position:absolute;font-size:30px"')},
+{t:"Toko kreator",d:20,L:["Di setiap produk ada toko kreatornya. Di sini tokonya *zelvo_official*.","Nama tampilannya Fizzxdevv ZELVO ADMIN.","Untuk sekarang toko ini belum punya produk lain, jadi belum banyak yang bisa dilihat."],
+b:d=>pt(12,9)+a(.5,.9,"av sc2","FI")+X("Fizzxdevv | ZELVO ADMIN",1.8,770,56,"mk")+X("zelvo_official",2.6,860,44,"bi","#4D8DFF")+a(4,.6,"pl3 r","5.0 dari 1 rating toko",'style="left:290px;top:990px;position:absolute"')+a(7,.8,"gh mk","Toko ini belum punya produk lain.")},
+{t:"Login & register",d:20,L:["Kalau mau punya akun, ada halaman daftar dan login.","Bentuk di layar ini ilustrasi konsep, bukan halaman aslinya.","Akun ini nanti dipakai buat masuk ke fitur kreator."],
+b:d=>["Nama","Username","Email","Password"].map((x,i)=>a(1.5+i*3,.5,"fm r",`<label>${x}</label><div>${a(2+i*3,2,"",'<i></i>',"")}</div>`,`style="top:${480+i*220}px" data-s="click"`)).join("").replace(/<div class="" data-a="([\d.]+)" data-d="2" ><i><\/i><\/div>/g,'<i data-a="$1" data-d="2"></i>')+a(14.5,.6,"btn sc2","Daftar",'data-s="click"')+NT(1)},
+{t:"Jadi kreator",d:25,L:["Nah, kalau lu punya desain sendiri, ada tombol *jadi penyumbang*.","Tombol Jual di website ngarah ke login dulu sebelum masuk proses penyumbang.","Idenya: upload, bagikan, atau jual."],
+b:d=>pt(16,13)+X("PUNYA DESAIN",.8,520,110,"sl","",7)+X("SENDIRI?",1.4,650,150,"sr","#4D8DFF",7)+X("UPLOAD.",8,600,170,"mk")+X("BAGIKAN.",11,790,170,"mk")+X("JUAL.",14,980,170,"mk","#10D9A0")+a(9,.8,"mk2 sc2","ZELVO<br>marketplace")+[0,1,2].map(i=>a(9+i*1.8,2.4,"fl fly o","desain.png",`style="top:${1330+i*50}px;font-size:34px;font-family:Inter;position:absolute;left:calc(80px + var(--p,0)*560px)"`)).join("")+a(17,.6,"pl3 r","Login dulu, baru ajukan",'style="left:200px;top:1620px;position:absolute"')},
+{t:"Upload template",d:25,L:["Setelah masuk, kreator bisa upload template dan ngisi judul, gaya, motor, deskripsi.","Lu juga bisa nentuin harga gratis atau berbayar, terus terbitkan.","Bagian ini ilustrasi konsep. Gue belum bisa ngecek dashboard aslinya."],
+b:d=>["Judul","Kategori Gaya","Kategori Motor","Deskripsi","Gratis / Berbayar","Terbitkan"].map((x,i)=>a(1.5+i*2.2,.5,"fd r"+(i==5?" go":""),x+(i<5?"<u></u>":""),`style="top:${470+i*140}px" data-s="click"`)).join("")+a(1.5,13,"scn o","")+NT(16)},
+{t:"Sistem kreator",d:25,L:["Buat kreator, saldo penjualan bisa ditarik mulai *Rp25.000*.","Dan toko yang dapat *20 rating bagus* bakal dapet centang terverifikasi.","Ini aturan yang tertulis di homepage. Penarikannya belum gue uji."],
+b:d=>L(.5,470,"penarikan saldo mulai")+a(1,3,"cn bi","",`style="top:540px;font-size:150px" data-n="25000" data-dc="0" data-pr="Rp" data-su=""`)+a(2.5,3.5,"bt",'<div class="bf"></div>','style="top:760px"')+L(8,880,"toko dengan 20 rating bagus")+Array.from({length:20},(_,i)=>a(9+i*.3,.3,"dt","",`style="left:${100+(i%10)*88}px;top:${980+Math.floor(i/10)*88}px;position:absolute;width:64px;height:64px"`)).join("")+a(16,.7,"pl3 sc2","centang toko terverifikasi",'style="left:210px;top:1250px;position:absolute" data-s="ding"')},
+{t:"Kelebihan & kekurangan",d:30,L:["Oke, rangkumannya. Menurut gue konsepnya *spesifik* dan jelas.","Ada kategori motor dan gaya, template gratis, install tanpa daftar, dan sistem kreator.","Yang masih perlu dikembangkan itu katalognya, karena baru *satu template*.","Wajar sih, marketplace kayak gini hidup dari kreatornya."],
+b:d=>X("KELEBIHAN",.5,450,60,"mk","#10D9A0")+["Konsep spesifik","Kategori motor & style","Template gratis","Install tanpa daftar","Sistem kreator"].map((x,i)=>a(2+i*2,.6,"it sl",x,`style="top:${580+i*85}px"`)).join("")+a(13,.8,"ln","",'style="left:100px;top:1040px;width:880px;height:4px;transform:scaleX(var(--p,0));transform-origin:left;background:#3A4668"')+X("YANG MASIH PERLU DIKEMBANGKAN",14,1090,44,"mk","#C9CDD6")+["Katalog masih terbatas saat review","Baru satu template ditemukan"].map((x,i)=>a(16+i*2.5,.6,"it w sl",x,`style="top:${1200+i*90}px;font-size:40px"`)).join("")},
+{t:"Closing",d:25,L:["Jadi, ZELVO cocok buat lu yang suka ganti style striping di game.","Dan buat kreator yang mau naruh karyanya di satu tempat.","Kalau katalognya udah rame, gue bakal cek lagi.","Cek sendiri di *zelvoo.biz.id*."],
+b:d=>pt(26,21)+X("BUAT YANG SUKA",.8,560,100,"mk","",10)+X("GANTI STYLE.",1.5,690,140,"mk","#4D8DFF",10)+[0,1].map(q=>a(10.4+q*.3,1.4,"rg2","",`style="--s:${q}"`)).join("")+X("ZELVO",10.8,790,230,"bi wmk","",0,'data-s="imp"')+X("zelvoo.biz.id",14,1070,56,"r","#4D8DFF")+a(21.5,3.2,"fo o","")}
+];
+let T0=0;S.forEach(s=>{s.s0=T0;T0+=s.d;const w=s.L.map(x=>x.length+18),tt=w.reduce((p,q)=>p+q),av=s.d-1.8;let c=.9;s.C=w.map(x=>{const r=[c,c+av*x/tt];c=r[1];return r})});
+const TOT=T0;let T=0,ci=-1,play=false,started=false,SP=1,EL=[],CAM,sk=-2,last=0,dr=0,MU=1,VOX=1,SUBS=1;
+const SC=$("SC"),STG=$("STG"),VP=$("VP"),P=$("P"),CT=$("CT"),WP=$("WP"),SUB=$("SUB"),ST=$("ST"),TL=$("TL"),PB=$("PB"),PS=$("PS");
+TL.innerHTML=S.map(s=>`<div class="sg" style="flex:${s.d}"><i></i></div>`).join("");
+$("LI").innerHTML=S.map((s,i)=>`<button class="li"><b>${p2(i+1)}</b><span>${s.t}</span><em>${fmt(s.d)}</em></button>`).join("");
+const SG=[...TL.children],LI=[...$("LI").children];
+/* audio */
+let AC,MG,MUS,nx=0,stp=0,iv;
+const CH=[[220,262,330],[196,247,294],[175,220,262],[196,247,294]],BS=[55,0,55,0,65.4,0,55,0,73.4,0,65.4,0,49,0,55,0];
+function osc(ty,f,t,at,dc,v,f2,dst){const o=AC.createOscillator(),g=AC.createGain();o.type=ty;o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+at+dc);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+at);g.gain.exponentialRampToValueAtTime(.0001,t+at+dc);o.connect(g);g.connect(dst||MG);o.start(t);o.stop(t+at+dc+.05)}
+function nz(t,dc,v,f1,f2,ty,dst){const n=AC.sampleRate*dc,b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=Math.random()*2-1;const s=AC.createBufferSource();s.buffer=b;const f=AC.createBiquadFilter();f.type=ty;f.frequency.setValueAtTime(f1,t);f.frequency.exponentialRampToValueAtTime(f2,t+dc);const g=AC.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+dc*.4);g.gain.linearRampToValueAtTime(0,t+dc);s.connect(f);f.connect(g);g.connect(dst||MG);s.start(t)}
+const SFX={click(){osc("square",1800,AC.currentTime,.001,.05,.12)},ding(){const t=AC.currentTime;osc("sine",880,t,.01,.5,.2);osc("sine",1320,t+.12,.01,.6,.16)},imp(){const t=AC.currentTime;osc("sine",130,t,.005,.7,.6,40);nz(t,.6,.2,2000,200,"lowpass")},wh(){nz(AC.currentTime,.7,.35,300,3500,"bandpass")}};
+function sched(){while(nx<AC.currentTime+.3){const s=stp%16,bar=Math.floor(stp/16)%4,t=nx,q=60/118/4;if(s%4==0)osc("sine",150,t,.002,.25,.7,45,MUS);if(s%2==1)nz(t,.05,.06,7000,9000,"highpass",MUS);if(s==4||s==12)nz(t,.12,.08,1800,1200,"bandpass",MUS);if(BS[s]){const o=AC.createOscillator(),f=AC.createBiquadFilter(),g=AC.createGain();o.type="sawtooth";o.frequency.value=BS[s]*(bar==2?.8:1);f.type="lowpass";f.frequency.value=380;g.gain.setValueAtTime(.25,t);g.gain.exponentialRampToValueAtTime(.001,t+q*1.8);o.connect(f);f.connect(g);g.connect(MUS);o.start(t);o.stop(t+q*2)}if(s%2==0)osc("triangle",CH[bar][(s/2)%3]*2,t,.01,.4,.07,0,MUS);nx+=q;stp++}}
+function au(){if(AC)return;AC=new(window.AudioContext||window.webkitAudioContext)();MG=AC.createGain();MG.gain.value=MU?.8:0;MG.connect(AC.destination);MUS=AC.createGain();MUS.gain.value=.22;MUS.connect(MG);nx=AC.currentTime+.1;iv=setInterval(()=>{if(play)sched()},100)}
+function say(t){if(!VOX||!("speechSynthesis"in window)||SP!=1)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/\*/g,""));u.lang="id-ID";const v=speechSynthesis.getVoices().find(v=>/^id/i.test(v.lang));if(v)u.voice=v;u.rate=1.12;speechSynthesis.speak(u)}
+function vn(){const ok="speechSynthesis"in window&&speechSynthesis.getVoices().some(v=>/^id/i.test(v.lang));$("VN").textContent=ok?"":"Voice Indonesia tidak ditemukan di perangkat ini, jadi hanya subtitle, musik, dan efek."}
+if("speechSynthesis"in window){speechSynthesis.onvoiceschanged=vn}vn();
+/* engine */
+function build(i){const s=S[i];SC.innerHTML=`<div class="cm">${s.b(s.d)}</div>`;
+EL=[...SC.querySelectorAll("[data-a]")].map(e=>({e,a:+e.dataset.a,d:+e.dataset.d,b:e.dataset.b==null?null:+e.dataset.b,n:e.dataset.n,s:e.dataset.s,f:0}));CAM=SC.firstChild;sk=-2;WP.className=i==S.length-1?"wp bk":"wp";if(play&&AC&&MU)SFX.wh()}
+function draw(){const s=S[ci],lt=T-s.s0,d=s.d;
+for(const o of EL){let p=E(C((lt-o.a)/o.d));if(o.b!=null)p*=1-C((lt-o.b)/.35);o.e.style.setProperty("--p",p);if(o.n!=null){const D=o.e.dataset;let v=(+D.n*p).toFixed(+D.dc);if(D.pr)v=v.replace(/\B(?=(\d{3})+(?!\d))/g,".");o.e.textContent=D.pr+v+D.su}if(o.s){if(lt<o.a)o.f=0;else if(play&&!o.f&&lt<o.a+.4){o.f=1;if(AC&&MU)SFX[o.s=="imp"?"imp":o.s]()}}}
+const u=C(lt/d);CAM.style.setProperty("--c",u*u*(3-2*u));SC.style.setProperty("--t",lt.toFixed(2));
+const k=s.C.findIndex(([x,y])=>lt>=x&&lt<y);if(k!=sk){sk=k;ST.innerHTML=k<0?"":s.L[k].replace(/\*(.+?)\*/g,"<b>$1</b>");if(play&&k>=0)say(s.L[k])}
+if(k>=0&&SUBS){const[x,y]=s.C[k];SUB.style.opacity=Math.min(C((lt-x)/.25),C((y-lt)/.25))}else SUB.style.opacity=0;
+let w=-1.2;if(started){if(lt<.6)w=-E(lt/.6);else if(lt>d-.5)w=1-E((lt-(d-.5))/.5)}WP.style.transform=`translateY(${w*100}%)`;
+STG.style.setProperty("--sy",(T*200)%700+"px");$("BG").style.transform=`translateY(${-(T*8)%120}px)`;$("GL").style.transform=`translate(${Math.sin(T/5)*160}px,${Math.cos(T/7)*220}px)`;
+if(MUS)MUS.gain.value=.22*C((TOT-T)/4);
+$("TD").innerHTML=`<b>${fmt(T)}</b> / ${fmt(TOT)}`;$("SN").innerHTML=`<b>${s.t}</b>`;
+SG.forEach((g,q)=>g.firstChild.style.width=100*C((T-S[q].s0)/S[q].d)+"%");LI.forEach((b,q)=>b.classList.toggle("on",q==ci))}
+function setT(x){T=C(x,0,TOT-.001);const i=S.findIndex(s=>T>=s.s0&&T<s.s0+s.d);if(i!=ci){ci=i;build(i)}draw()}
+function UI(){PB.textContent=play?"Pause":T>=TOT-.01?"Putar ulang":started?"Lanjut":"Play";PS.style.display=started?"none":"block";if(AC){play?AC.resume():AC.suspend()}if("speechSynthesis"in window){play?speechSynthesis.resume():speechSynthesis.pause()}}
+function tog(){if(T>=TOT-.01)setT(0);play=!play;started=true;au();last=performance.now();UI();draw()}
+function loop(ts){const dt=Math.min(.1,(ts-last)/1000);last=ts;if(play){T+=dt*SP;if(T>=TOT){T=TOT-.001;play=false;UI()}setT(T)}requestAnimationFrame(loop)}
+function fit(){const fs=document.fullscreenElement,w=P.clientWidth-(fs?16:0),h=fs?P.clientHeight-CT.offsetHeight-32:innerHeight-230,k=Math.max(.1,Math.min(w/1080,h/1920));VP.style.width=1080*k+"px";VP.style.height=1920*k+"px";STG.style.transform=`scale(${k})`}
+function go(x){started=true;if("speechSynthesis"in window)speechSynthesis.cancel();setT(x);UI()}
+PB.onclick=tog;PS.onclick=tog;$("RS").onclick=()=>{go(0);if(!play)tog()};
+$("SPD").onclick=e=>{SP=SP==1?2:SP==2?4:1;e.target.textContent=SP+"×";if(SP!=1&&"speechSynthesis"in window)speechSynthesis.cancel()};
+$("FS").onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():P.requestFullscreen()}catch(e){}};
+const tg=(id,f)=>$(id).onclick=e=>{const v=f();e.target.setAttribute("aria-pressed",v)};
+tg("AU",()=>{MU=!MU;if(MG)MG.gain.value=MU?.8:0;return!!MU});tg("VO",()=>{VOX=!VOX;if(!VOX&&"speechSynthesis"in window)speechSynthesis.cancel();return!!VOX});tg("SB",()=>{SUBS=!SUBS;draw();return!!SUBS});
+LI.forEach((b,q)=>b.onclick=()=>go(S[q].s0));
+const sk2=e=>{const r=TL.getBoundingClientRect();go(C((e.clientX-r.left)/r.width)*TOT)};
+TL.onpointerdown=e=>{TL.setPointerCapture(e.pointerId);dr=1;sk2(e)};TL.onpointermove=e=>{if(dr)sk2(e)};TL.onpointerup=()=>dr=0;
+document.addEventListener("keydown",e=>{if(e.target===document.body&&e.code=="Space"){e.preventDefault();tog()}});
+addEventListener("resize",fit);document.addEventListener("fullscreenchange",fit);
+fit();setT(0);UI();requestAnimationFrame(loop);
+</script>
+</body>
+</html>
